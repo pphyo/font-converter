@@ -28,6 +28,8 @@ public class Converter implements Initializable {
 	private Label item;
 	@FXML
 	private TableView<FileViewer> list;
+	@FXML
+	private Label title;
 	private Factory repo;
 	private static final ZawgyiDetector detector = new ZawgyiDetector();
 	private static final TransliterateZ2U z2UConverter = new TransliterateZ2U("Zawgyi to Unicode");
@@ -37,6 +39,7 @@ public class Converter implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		repo = Factory.getInstace();
+		title.setText("\u00A9 Myanmar Font Converter \u00A9");
 		item.setText("0 item");	
 		createContextMenu();
 		list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -132,7 +135,7 @@ public class Converter implements Initializable {
 		list.getItems().clear();
 		list.getItems().addAll(repo.search());
 		String items = String.valueOf(repo.getListSize()).concat(repo.getListSize() == 1 ? " item" : " items");
-		item.setText(items);				
+		item.setText(items);
 	}
 
 	private void remove() {

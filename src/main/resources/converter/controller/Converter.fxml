@@ -15,7 +15,7 @@
    <children>
       <HBox alignment="CENTER" style="-fx-background-color: chocolate;">
          <children>
-            <Label text="MM Font Converter" textFill="WHITE">
+            <Label fx:id="title" text="MM Font Converter" textFill="WHITE">
                <font>
                   <Font name="Serif Bold" size="25.0" />
                </font>

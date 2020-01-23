@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="converter.controller.Detail">
+<VBox fx:id="root" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="converter.controller.Detail">
    <children>
       <HBox alignment="CENTER" style="-fx-background-color: chocolate;">
          <children>
-            <Label text="Detail" textFill="WHITE">
+            <Label fx:id="title" text="Detail" textFill="WHITE">
                <font>
                   <Font name="Serif Bold" size="32.0" />
                </font>

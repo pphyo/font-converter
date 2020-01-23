@@ -17,6 +17,7 @@ public class App extends Application {
 			Parent root = FXMLLoader.load(Converter.class.getResource("Converter.fxml"));
 			stage.setScene(new Scene(root));
 			stage.setTitle("MM Font Converter");
+			stage.setResizable(false);
 			stage.getIcons().add(new Image("zawtouni.png"));
 			stage.show();
 		} catch (Exception e) {
