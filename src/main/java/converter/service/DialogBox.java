@@ -10,8 +10,9 @@ public class DialogBox {
 		dialog.setTitle(title);
 		dialog.setContentText(contentText);
 		dialog.setHeaderText(null);
+		dialog.setResizable(false);
 		dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 		dialog.show();
 	}
-
+	
 }

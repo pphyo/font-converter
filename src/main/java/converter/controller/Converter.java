@@ -35,6 +35,7 @@ public class Converter implements Initializable {
 	private static final TransliterateZ2U z2UConverter = new TransliterateZ2U("Zawgyi to Unicode");
 	private static final TransliterateU2Z u2ZConverter = new TransliterateU2Z("Unicode to Zawgyi");
 	private FileViewer fv;
+	List<FileViewer> files;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +44,7 @@ public class Converter implements Initializable {
 		item.setText("0 item");	
 		createContextMenu();
 		list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		search();
 	}
 	
 	private void createContextMenu() {
@@ -55,6 +57,7 @@ public class Converter implements Initializable {
 	}
 	
 	public void fileChoose() {
+		
 		try {
 			FileChooser fc = new FileChooser();
 			fc.setTitle("Select File");
@@ -71,9 +74,9 @@ public class Converter implements Initializable {
 				repo.add(fv);
 				list.getItems().add(fv);
 			}
-
-			//commit this to github repository
+			
 			search();
+
 		} catch (Exception e) {
 			DialogBox.openBox("Information", "Didn't choose");
 		}
@@ -139,7 +142,7 @@ public class Converter implements Initializable {
 	}
 
 	private void remove() {
-		List<FileViewer> files = list.getSelectionModel().getSelectedItems();
+		files = list.getSelectionModel().getSelectedItems();
 		for(FileViewer fv : files) {
 			repo.remove(fv);
 		}
