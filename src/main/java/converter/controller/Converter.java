@@ -35,7 +35,8 @@ public class Converter implements Initializable {
 	private static final TransliterateZ2U z2UConverter = new TransliterateZ2U("Zawgyi to Unicode");
 	private static final TransliterateU2Z u2ZConverter = new TransliterateU2Z("Unicode to Zawgyi");
 	private FileViewer fv;
-	List<FileViewer> files;
+	private List<FileViewer> files;
+	private File initFile = new File(System.getProperty("user.home"), "Desktop");
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -61,7 +62,7 @@ public class Converter implements Initializable {
 		try {
 			FileChooser fc = new FileChooser();
 			fc.setTitle("Select File");
-			fc.setInitialDirectory(new File(System.getProperty("user.home"), "Desktop"));
+			fc.setInitialDirectory(initFile);
 
 			List<File> files = fc.showOpenMultipleDialog(item.getScene().getWindow());
 			
@@ -73,6 +74,7 @@ public class Converter implements Initializable {
 				fv.setFileOrFolder("File");
 				repo.add(fv);
 				list.getItems().add(fv);
+				initFile = new File(file.getParent());
 			}
 			
 			search();
@@ -86,7 +88,7 @@ public class Converter implements Initializable {
 		try {
 			DirectoryChooser dc = new DirectoryChooser();
 			dc.setTitle("Select Folder");
-			dc.setInitialDirectory(new File(System.getProperty("user.home"), "Desktop"));
+			dc.setInitialDirectory(initFile);
 			File files = dc.showDialog(item.getScene().getWindow());
 			
 			fv = new FileViewer();
@@ -97,6 +99,7 @@ public class Converter implements Initializable {
 			repo.add(fv);
 			list.getItems().add(fv);
 			search();
+			initFile = new File(files.getParent());
 		} catch (Exception e) {
 			DialogBox.openBox("Information", "Didn't choose");
 		}
