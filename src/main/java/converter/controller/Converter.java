@@ -42,7 +42,6 @@ public class Converter implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		repo = Factory.getInstace();
 		title.setText("\u00A9 Myanmar Font Converter \u00A9");
-		item.setText("0 item");	
 		createContextMenu();
 		list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		search();
@@ -65,7 +64,7 @@ public class Converter implements Initializable {
 			fc.setInitialDirectory(initFile);
 
 			List<File> files = fc.showOpenMultipleDialog(item.getScene().getWindow());
-			
+
 			for(File file : files) {
 				fv = new FileViewer();
 				fv.setName(file.getName());
@@ -76,11 +75,11 @@ public class Converter implements Initializable {
 				list.getItems().add(fv);
 				initFile = new File(file.getParent());
 			}
-			
+
 			search();
 
 		} catch (Exception e) {
-			DialogBox.openBox("Information", "Didn't choose");
+			DialogBox.openBox("Information", "Didn't choose File");
 		}
 	}
 
@@ -95,13 +94,13 @@ public class Converter implements Initializable {
 			fv.setName(files.getName());
 			fv.setPath(files.getPath());
 			fv.setZawOrUni(chickUniOrZawgyi(files));
-			fv.setFileOrFolder("Folder");
+			fv.setFileOrFolder("Folder Choose");
 			repo.add(fv);
 			list.getItems().add(fv);
 			search();
 			initFile = new File(files.getParent());
 		} catch (Exception e) {
-			DialogBox.openBox("Information", "Didn't choose");
+			DialogBox.openBox("Information", "Didn't choose Folder");
 		}
 	}
 
@@ -110,37 +109,46 @@ public class Converter implements Initializable {
 	}
 
 	public void zawToUni() {
-		List<FileViewer> items = list.getItems();
-		for(FileViewer fv : items) {
-			if(detector.getZawgyiProbability(fv.getPath()) > 0.999) {
-				File file = new File(fv.getPath());
-				fv.setPath(z2UConverter.convert(fv.getPath()));
-				file.renameTo(new File(fv.getPath()));
-			}
-		}
 		
-		DialogBox.openBox("Complete", "Convert Successfully");
+		if(list.getItems().size() == 0) {
+			DialogBox.openBox("Info", "There is no item in the list.");
+		} else {
+			List<FileViewer> items = list.getItems();
+			for(FileViewer fv : items) {
+				if(detector.getZawgyiProbability(fv.getPath()) > 0.999) {
+					File file = new File(fv.getPath());
+					fv.setPath(z2UConverter.convert(fv.getPath()));
+					file.renameTo(new File(fv.getPath()));
+				}
+			}
+			
+			DialogBox.openBox("Complete", "Convert Successfully");
+		}
 		
 	}
 
 	public void uniToZaw() {
-		List<FileViewer> items = list.getItems();
-		for(FileViewer fv : items) {
-			if(detector.getZawgyiProbability(fv.getPath()) < 0.001) {
-				File file = new File(fv.getPath());
-				fv.setPath(u2ZConverter.convert(fv.getPath()));
-				file.renameTo(new File(fv.getPath()));
+		if(list.getItems().size() == 0) {
+			DialogBox.openBox("Info", "There is no item in the list.");
+		} else {
+			List<FileViewer> items = list.getItems();
+			for(FileViewer fv : items) {
+				if(detector.getZawgyiProbability(fv.getPath()) < 0.001) {
+					File file = new File(fv.getPath());
+					fv.setPath(u2ZConverter.convert(fv.getPath()));
+					file.renameTo(new File(fv.getPath()));
+				}
 			}
+			
+			DialogBox.openBox("Complete", "Convert Successfully");
 		}
-		
-		DialogBox.openBox("Complete", "Convert Successfully");
 		
 	}
 
 	private void search() {
 		list.getItems().clear();
 		list.getItems().addAll(repo.search());
-		String items = String.valueOf(repo.getListSize()).concat(repo.getListSize() == 1 ? " item" : " items");
+		String items = String.valueOf(repo.getListSize()).concat(repo.getListSize() < 2 ? " item" : " items");
 		item.setText(items);
 	}
 

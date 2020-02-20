@@ -7,7 +7,7 @@ import converter.entity.FileViewer;
 
 public class Factory {
 	
-	List<FileViewer> list;
+	private List<FileViewer> list;
 	private static Factory INSTANCE;
 	
 	private Factory() {
